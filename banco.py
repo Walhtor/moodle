@@ -25,23 +25,37 @@ cell_obj = sheet_obj.cell(row=1, column=2)
 f = open('banco_preguntas.txt', 'w+')
 
 # sheet = wb_obj.get_sheet_by_name('Hoja1')
-print(sheet_obj.max_row)
+#print(sheet_obj.max_row)
 max_fila = sheet_obj.max_row
-print(sheet_obj.max_column)
+#print(sheet_obj.max_column)
 max_columna = sheet_obj.max_column
 
-print(tuple(sheet_obj['A1': 'B' + str(max_fila)]))
+#print(tuple(sheet_obj['A1': 'B' + str(max_fila)]))
 f.write(cell_obj.value)
 f.close()
 
-for obj_filas in sheet_obj['A1':'B' + str(max_fila)]:
-    for celda in obj_filas:
-        if celda.value > 0:
-            print(celda.coordinate, celda.value)
-    print('--- END OF ROW ---')
+for filas in sheet_obj['A1':'B' + str(max_fila)]:
+    for celda in filas:
+            #tipo = ""
+            if type(celda.value) == int and celda.value > 0:
+                #print("Pregunta")
+                tipo = "Pregunta"
+            elif type(celda.value) == int and celda.value < 0:
+                tipo = "Correcta"
+            elif type(celda.value) == int and celda.value == 0:
+                tipo = "Respuesta"
+            else:
+                if tipo == "Pregunta":
+                    print()
+                    print("Pregunta", celda.value + " {")
+                elif tipo == "Correcta":
+                    print("Correcta","= " + celda.value)
+                else:
+                    print("Respuesta","~ " + celda.value)
+    #print('--- END OF ROW ---')
 
 cell_obj = sheet_obj.cell(row=1, column=2)
 
 # Print value of cell object
 # using the value attribute
-print(cell_obj.value)
+#print(cell_obj.value)
